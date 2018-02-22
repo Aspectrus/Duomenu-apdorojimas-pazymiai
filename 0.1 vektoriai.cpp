@@ -4,26 +4,15 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
+#include <iomanip>
 
 using std::endl;
 using std::cout;
 float vidurkis(std::vector<int> );
-float vidurkis(std::vector<int> pazymiai)
-{
-    float sum=0;
-    for( std::size_t i=0; i<pazymiai.size(); i++ )
-    {
-        sum+=pazymiai[i];
-    }
-    return sum/pazymiai.size();
-}
+
 float mediana (std::vector<int> );
 
-float mediana (std::vector<int> pazymiai)
-{    std::sort (pazymiai.begin(), pazymiai.end());
-    if(pazymiai.size()%2==0) return (pazymiai[pazymiai.size()/2]+pazymiai[pazymiai.size()/2-1])/float(2);
-    else return pazymiai[pazymiai.size()/2];
-}
+
 main()
 {
     std::string vardas, pavarde;
@@ -73,7 +62,21 @@ break;
    {
        cout<<pazymiai[i]<<"\t";
    }
-   cout<<egzaminas<<"\t"<<galBalas;
+   cout<<egzaminas<<"\t"<<std::setprecision(3)<<galBalas;
 
     return 0;
+}
+float mediana (std::vector<int> pazymiai)
+{    std::sort (pazymiai.begin(), pazymiai.end());
+    if(pazymiai.size()%2==0) return (pazymiai[pazymiai.size()/2]+pazymiai[pazymiai.size()/2-1])/float(2);
+    else return pazymiai[pazymiai.size()/2];
+}
+float vidurkis(std::vector<int> pazymiai)
+{
+    float sum=0;
+    for( std::size_t i=0; i<pazymiai.size(); i++ )
+    {
+        sum+=pazymiai[i];
+    }
+    return sum/pazymiai.size();
 }

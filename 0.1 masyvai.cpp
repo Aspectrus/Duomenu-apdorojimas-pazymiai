@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
-
+#include <iomanip>
 using std::endl;
 using std::cout;
 float vidurkis(int *, int );
@@ -79,7 +79,7 @@ main()
     {
         cout<<pazymiai[i]<<"\t";
     }
-    cout<<egzaminas<<"\t"<<galBalas;
+    cout<<egzaminas<<"\t"<<std::setprecision(3)<<galBalas;
     return 0;
 }
 float vidurkis(int *pazymiai, int ilgis)
