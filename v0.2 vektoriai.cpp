@@ -40,7 +40,7 @@ main()
             duom.push_back(mokinys());
             cout<<"Vardas:\n";
             std::cin>>duom[0].vardas;
-               cout<<"Pavarde:\n";
+            cout<<"Pavarde:\n";
             std::cin>>duom[0].pavarde;
             for(int i=0; i<n; i++)
             {
@@ -53,11 +53,11 @@ main()
         if(pasirinkimas==2)
         {
             duom.push_back(mokinys());
-               cout<<"Vardas:\n";
+            cout<<"Vardas:\n";
             std::cin>>duom[0].vardas;
-             cout<<"Pavarde:\n";
+            cout<<"Pavarde:\n";
             std::cin>>duom[0].pavarde;
-             cout<<"Pazymiai:(baigti rasykite -1)\n";
+            cout<<"Pazymiai:(baigti rasykite -1)\n";
             while(true)
             {
                 std::cin>>k;
@@ -97,7 +97,7 @@ main()
         }
     }
 
-spausdinti();
+    spausdinti();
 
 
     return 0;
@@ -127,10 +127,10 @@ void spausdinti()
     {
 
         cout<<duom[i].pavarde<<"\t"<<duom[i].vardas<<"\t";
-                galBalas=0.6*duom[i].egzaminas+vidurkis(duom[i].pazymiai)*0.4;
+        galBalas=0.6*duom[i].egzaminas+vidurkis(duom[i].pazymiai)*0.4;
 
         cout<<std::setprecision(3)<<galBalas<<"\t\t\t";
-                galBalas=0.6*duom[i].egzaminas+mediana(duom[i].pazymiai)*0.4;
+        galBalas=0.6*duom[i].egzaminas+mediana(duom[i].pazymiai)*0.4;
 
         cout<<std::setprecision(3)<<galBalas<<"\n";
 
