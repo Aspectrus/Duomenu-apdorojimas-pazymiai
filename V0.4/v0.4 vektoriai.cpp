@@ -3,8 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
-#include <sstream>
 #include "struktura.h"
+#include <chrono>
 
 using std::endl;
 using std::cout;
@@ -24,84 +24,30 @@ main()
 
 
     int pasirinkimas;
+    std::chrono::high_resolution_clock::time_point   start;
     cout<<"1-atsitiktiniai pazymiai\n2-irasyti pazymius\n3-nuskaityti faila\n";
     while(std::cin>>pasirinkimas)
     {
         if(pasirinkimas==1)
         {
 
-            int n=1;
-            for (int i=1; i<=5; i++)
-            {
-                n*=10;
-                std::ofstream out(std::to_string(i)+"irasas.txt");
-                for(int j=1; j<=n; j++)
-                {
-                    out<<"Vardas"+std::to_string(j)+" ";
-                    out<<"Pavarde"+std::to_string(j);
-                    int c=randomnumber(1,15);
-
-                for(int k=0; k<c; k++)
-                    {
-
-                       out<<" "<<randomnumber(1, 10);;
-
-                    }
-                    out<<"\n";
-
-
-                }
-            }
-
+        filegen(5);
 
             break;
         }
 
         if(pasirinkimas==2)
         {
-            duom.push_back(mokinys());
-            cout<<"Vardas:\n";
-            std::cin>>duom[0].vardas;
-            cout<<"Pavarde:\n";
-            std::cin>>duom[0].pavarde;
-            cout<<"Pazymiai:(baigti rasykite -1)\n";
-            int k;
-            while(true)
-            {
-                std::cin>>k;
-                if(k==-1)
-                    break;
-                duom[0].pazymiai.push_back(k);
-
-            }
-            cout<<"Iveskite egzamino rezultata"<<endl;
-            std::cin>>k;
-            duom[0].egzaminas=k;
+           irasyti();
             break;
         }
 
         if(pasirinkimas==3)
         {
+            start = std::chrono::system_clock::now();
             checkfile("kursiokai.txt");
-            std::ifstream in ("kursiokai.txt");
-            std::string eil;
-            int a=0;
-            while(std::getline(in, eil))
-            {
-                duom.push_back(mokinys());
-                std::istringstream ss(eil);
-                std::string temp;
-                ss>>duom[a].vardas;
-                ss>>duom[a].pavarde;
-                int num;
-                while(ss>>num)
-                {
-                    duom[a].pazymiai.push_back(num);
-                }
-                duom[a].egzaminas=duom[a].pazymiai[duom[a].pazymiai.size()-1];
-                duom[a].pazymiai.pop_back();
-                a++;
-            }
+            read("kursiokai.txt");
+            spausdinti();
             break;
         }
     }
@@ -110,7 +56,6 @@ main()
         return lhs.pavarde < rhs.pavarde;
     });
 
-    spausdinti();
     studentudalijimas();
 
 
