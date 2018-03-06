@@ -47,17 +47,22 @@ main()
             start = std::chrono::system_clock::now();
             checkfile("kursiokai.txt");
             read("kursiokai.txt");
-            spausdinti();
-            break;
-        }
-    }
-    std::sort(duom.begin(), duom.end(), [](const mokinys& lhs, const mokinys& rhs)
+              std::sort(duom.begin(), duom.end(), [](const mokinys& lhs, const mokinys& rhs)
     {
         return lhs.pavarde < rhs.pavarde;
     });
 
-    studentudalijimas();
 
+            spausdinti();
+            break;
+        }
+    }
+
+
+    studentudalijimas();
+   auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+    std::cout << elapsed<< '\n';
 
     return 0;
 }

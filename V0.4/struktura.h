@@ -19,9 +19,9 @@ float mediana (std::vector<int>);
 void spausdinti();
 int randomnumber(int, int);
 void studentudalijimas();
-void checkfile(std::string a);
-
-
-
+void checkfile(std::string);
+void read(std::string);
+void filegen(int);
+void irasyti();
 
 #endif // STRUKTURA_H_INCLUDED
