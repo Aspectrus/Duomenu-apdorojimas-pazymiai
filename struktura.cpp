@@ -31,10 +31,8 @@ float vidurkis(std::vector<int> pazymiai)
     return sum/pazymiai.size();
 }
 
-
 unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 std::default_random_engine generator (seed);
-
 int randomnumber (int a, int b)
 {
     std::uniform_int_distribution<int> distribution(a, b);
@@ -100,25 +98,25 @@ void checkfile(std::string a)
 
 void read (std::string name)
 {
-        std::ifstream in (name);
-            std::string eil;
-            int a=0;
-            while(std::getline(in, eil))
-            {
-                duom.push_back(mokinys());
-                std::istringstream ss(eil);
-                std::string temp;
-                ss>>duom[a].vardas;
-                ss>>duom[a].pavarde;
-                int num;
-                while(ss>>num)
-                {
-                    duom[a].pazymiai.push_back(num);
-                }
-                duom[a].egzaminas=duom[a].pazymiai[duom[a].pazymiai.size()-1];
-                duom[a].pazymiai.pop_back();
-                a++;
-            }
+    std::ifstream in (name);
+    std::string eil;
+    double a=0;
+    while(std::getline(in, eil))
+    {
+        duom.push_back(mokinys());
+        std::istringstream ss(eil);
+        std::string temp;
+        ss>>duom[a].vardas;
+        ss>>duom[a].pavarde;
+        int num;
+        while(ss>>num)
+        {
+            duom[a].pazymiai.push_back(num);
+        }
+        duom[a].egzaminas=duom[a].pazymiai[duom[a].pazymiai.size()-1];
+        duom[a].pazymiai.pop_back();
+        a++;
+    }
 
 }
 
@@ -126,62 +124,94 @@ void read (std::string name)
 void filegen(int a)
 {
 
-            int n=1;
-            for (int i=1; i<=a; i++)
+    int n=1;
+    for (int i=1; i<=a; i++)
+    {
+        n*=10;
+        std::ofstream out(std::to_string(i)+"irasas.txt");
+        for(int j=1; j<=n; j++)
+        {
+            out<<"Vardas"+std::to_string(j)+" ";
+            out<<"Pavarde"+std::to_string(j);
+            int c=randomnumber(2,15);
+
+            for(int k=0; k<c; k++)
             {
-                n*=10;
-                std::ofstream out(std::to_string(i)+"irasas.txt");
-                for(int j=1; j<=n; j++)
-                {
-                    out<<"Vardas"+std::to_string(j)+" ";
-                    out<<"Pavarde"+std::to_string(j);
-                    int c=randomnumber(1,15);
 
-                for(int k=0; k<c; k++)
-                    {
+                out<<" "<<randomnumber(1, 10);;
 
-                       out<<" "<<randomnumber(1, 10);;
-
-                    }
-                    out<<"\n";
-
-
-                }
             }
+            out<<"\n";
+
+
+        }
+    }
 }
 
 
- void bench(void(*f)())
- {
-    auto start = std::chrono::high_resolution_clock::now();
-    f();
-    auto end = std::chrono::high_resolution_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
-    std::cout << elapsed<< '\n';
 
- }
+void irasyti()
+{
+    duom.push_back(mokinys());
+    cout<<"Vardas:\n";
+    std::cin>>duom[0].vardas;
+    cout<<"Pavarde:\n";
+    std::cin>>duom[0].pavarde;
+    cout<<"Pazymiai:(baigti rasykite -1)\n";
+   int a;
 
 
+    std::string line;
 
- void irasyti()
- {
-      duom.push_back(mokinys());
-            cout<<"Vardas:\n";
-            std::cin>>duom[0].vardas;
-            cout<<"Pavarde:\n";
-            std::cin>>duom[0].pavarde;
-            cout<<"Pazymiai:(baigti rasykite -1)\n";
-            int k;
-            while(true)
+std::cin.ignore();
+          while(1)
+        {
+
+          while(1)
+        {
+
+            std::getline(std::cin, line);
+            std::stringstream ss(line);
+
+
+            if(ss >> a && ss.eof() && (a >= 1 && a <= 10)||a==-1)
             {
-                std::cin>>k;
-                if(k==-1)
-                    break;
-                duom[0].pazymiai.push_back(k);
 
+
+                break;
             }
-            cout<<"Iveskite egzamino rezultata"<<endl;
-            std::cin>>k;
-            duom[0].egzaminas=k;
-            spausdinti();
- }
+
+             cout<<"WRONG\n";
+
+
+        }
+
+
+
+
+        if(a==-1) break;
+        else duom[0].pazymiai.push_back(a);
+
+
+         }
+
+    cout<<"Iveskite egzamino rezultata"<<endl;
+         while(1)
+        {
+
+
+            std::string line;
+            std::getline(std::cin, line);
+            std::stringstream s(line);
+            if(s >> a && s.eof() && (a >= 1 && a <= 10))
+            {
+                break;
+            }
+
+
+
+            cout<<"WRONG\n";
+        }
+    duom[0].egzaminas=a;
+    spausdinti();
+}
