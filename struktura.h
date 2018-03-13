@@ -1,5 +1,7 @@
 #ifndef STRUKTURA_H_INCLUDED
 #define STRUKTURA_H_INCLUDED
+#include <list>
+#include <deque>
 
 struct mokinys
 {
@@ -7,11 +9,6 @@ struct mokinys
     std::vector<int> pazymiai;
     int egzaminas;
 };
-extern std::vector<mokinys> duom;
-extern std::vector<mokinys> varg;
-extern std::vector<mokinys> kiet;
-
-
 
 
 float vidurkis(std::vector<int>);
@@ -22,6 +19,7 @@ void studentudalijimas();
 void checkfile(std::string);
 void read(std::string);
 void filegen(int);
-void irasyti();
+void irasyti(std::vector<mokinys>);
+template <typename T>void spausdinti(T duom);
 
 #endif // STRUKTURA_H_INCLUDED

@@ -40,18 +40,18 @@ int randomnumber (int a, int b)
 
 
 }
-void spausdinti()
+template <typename T>void spausdinti(T duom)
 {
 
-    cout<<"Pavarde\t"<<"Vardas\tGalutinis-Vidurkis\tGalutine-mediana\n";
+    cout<<"Pavarde\t\t\t\t\t\t"<<"Vardas\t\t\t\t\t\t\t\tGalutinis-Vidurkis\t\t\t\t\t\tGalutine-mediana\n";
     float galBalas;
-    for(std::size_t i=0; i<duom.size(); i++)
+   for(std::size_t i=0; i<duom.size(); i++)
     {
 
-        cout<<duom[i].pavarde<<"\t"<<duom[i].vardas<<"\t";
+        cout<<duom[i].pavarde<<"\t\t\t"<<duom[i].vardas<<"\t\t";
         galBalas=0.6*duom[i].egzaminas+vidurkis(duom[i].pazymiai)*0.4;
 
-        cout<<std::setprecision(3)<<galBalas<<"\t\t\t";
+        cout<<std::setprecision(3)<<galBalas<<"\t\t\t\t\t";
         galBalas=0.6*duom[i].egzaminas+mediana(duom[i].pazymiai)*0.4;
 
         cout<<std::setprecision(3)<<galBalas<<"\n";
@@ -60,6 +60,8 @@ void spausdinti()
     }
 
 }
+
+/*
 void studentudalijimas()
 {
 
@@ -80,6 +82,7 @@ void studentudalijimas()
     }
 
 }
+*/
 void checkfile(std::string a)
 {
     std::ifstream in;
@@ -96,7 +99,12 @@ void checkfile(std::string a)
     in.close();
 }
 
-void read (std::string name)
+
+
+
+
+
+/*void read (std::string name)
 {
     std::ifstream in (name);
     std::string eil;
@@ -118,15 +126,21 @@ void read (std::string name)
         a++;
     }
 
+             std::sort(duom.begin(), duom.end(), [](const mokinys& a, const mokinys& rhs)
+            {
+                return a.pavarde < rhs.pavarde;
+            });
+
 }
-
-
+*/
 void filegen(int a)
 {
 
     int n=1;
     for (int i=1; i<=a; i++)
     {
+        cout<<i<<" file gen - ";
+       auto  start = std::chrono::high_resolution_clock::now();
         n*=10;
         std::ofstream out(std::to_string(i)+"irasas.txt");
         for(int j=1; j<=n; j++)
@@ -145,12 +159,13 @@ void filegen(int a)
 
 
         }
+                auto end = std::chrono::high_resolution_clock::now();
+                auto elapsed = (std::chrono::duration<double>( end - start ).count());
+                std::cout << elapsed<< "s \n";
     }
 }
 
-
-
-void irasyti()
+void irasyti(std::vector<mokinys> duom)
 {
     duom.push_back(mokinys());
     cout<<"Vardas:\n";
@@ -158,16 +173,16 @@ void irasyti()
     cout<<"Pavarde:\n";
     std::cin>>duom[0].pavarde;
     cout<<"Pazymiai:(baigti rasykite -1)\n";
-   int a;
+    int a;
 
 
     std::string line;
 
-std::cin.ignore();
-          while(1)
-        {
+    std::cin.ignore();
+    while(1)
+    {
 
-          while(1)
+        while(1)
         {
 
             std::getline(std::cin, line);
@@ -181,7 +196,7 @@ std::cin.ignore();
                 break;
             }
 
-             cout<<"WRONG\n";
+            cout<<"WRONG\n";
 
 
         }
@@ -189,29 +204,33 @@ std::cin.ignore();
 
 
 
-        if(a==-1) break;
-        else duom[0].pazymiai.push_back(a);
+        if(a==-1)
+            break;
+        else
+            duom[0].pazymiai.push_back(a);
 
 
-         }
+    }
 
     cout<<"Iveskite egzamino rezultata"<<endl;
-         while(1)
+    while(1)
+    {
+
+
+        std::string line;
+        std::getline(std::cin, line);
+        std::stringstream s(line);
+        if(s >> a && s.eof() && (a >= 1 && a <= 10))
         {
-
-
-            std::string line;
-            std::getline(std::cin, line);
-            std::stringstream s(line);
-            if(s >> a && s.eof() && (a >= 1 && a <= 10))
-            {
-                break;
-            }
-
-
-
-            cout<<"WRONG\n";
+            break;
         }
+
+
+
+        cout<<"WRONG\n";
+    }
     duom[0].egzaminas=a;
-    spausdinti();
+    spausdinti(duom);
 }
+
+
