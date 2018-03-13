@@ -1,16 +1,4 @@
-#include <iostream>
-#include <string.h>
-#include <vector>
-#include <algorithm>
-#include <random>
-#include <chrono>
-#include <iomanip>
 #include "struktura.h"
-#include <fstream>
-#include <sstream>
-
-using std::endl;
-using std::cout;
 
 float mediana (std::vector<int> pazymiai)
 {
@@ -40,49 +28,7 @@ int randomnumber (int a, int b)
 
 
 }
-template <typename T>void spausdinti(T duom)
-{
 
-    cout<<"Pavarde\t\t\t\t\t\t"<<"Vardas\t\t\t\t\t\t\t\tGalutinis-Vidurkis\t\t\t\t\t\tGalutine-mediana\n";
-    float galBalas;
-   for(std::size_t i=0; i<duom.size(); i++)
-    {
-
-        cout<<duom[i].pavarde<<"\t\t\t"<<duom[i].vardas<<"\t\t";
-        galBalas=0.6*duom[i].egzaminas+vidurkis(duom[i].pazymiai)*0.4;
-
-        cout<<std::setprecision(3)<<galBalas<<"\t\t\t\t\t";
-        galBalas=0.6*duom[i].egzaminas+mediana(duom[i].pazymiai)*0.4;
-
-        cout<<std::setprecision(3)<<galBalas<<"\n";
-
-
-    }
-
-}
-
-/*
-void studentudalijimas()
-{
-
-    float galBalas;
-
-    for(std::size_t i=0; i<duom.size(); i++)
-    {
-
-        galBalas=vidurkis(duom[i].pazymiai);
-        if(galBalas>=6)
-            kiet.push_back(duom[i]);
-        else
-            varg.push_back(duom[i]);
-
-
-
-
-    }
-
-}
-*/
 void checkfile(std::string a)
 {
     std::ifstream in;
@@ -100,39 +46,36 @@ void checkfile(std::string a)
 }
 
 
-
-
-
-
-/*void read (std::string name)
+void read2(std::vector<mokinys> & temp, std::string name)
 {
+
     std::ifstream in (name);
     std::string eil;
-    double a=0;
+    int a=0;
     while(std::getline(in, eil))
     {
-        duom.push_back(mokinys());
+        temp.push_back(mokinys());
+
+
         std::istringstream ss(eil);
-        std::string temp;
-        ss>>duom[a].vardas;
-        ss>>duom[a].pavarde;
+        ss>>temp[a].vardas;
+        ss>>temp[a].pavarde;
         int num;
+        std::vector<int> vtemp;
         while(ss>>num)
-        {
-            duom[a].pazymiai.push_back(num);
-        }
-        duom[a].egzaminas=duom[a].pazymiai[duom[a].pazymiai.size()-1];
-        duom[a].pazymiai.pop_back();
-        a++;
+        vtemp.push_back(num);
+
+
+
+    int egzaminas=vtemp[vtemp.size()-1];
+    vtemp.pop_back();
+    temp[a].galmed=0.6*egzaminas+mediana(vtemp)*0.4;
+    temp[a].galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
+    a++;
     }
 
-             std::sort(duom.begin(), duom.end(), [](const mokinys& a, const mokinys& rhs)
-            {
-                return a.pavarde < rhs.pavarde;
-            });
-
 }
-*/
+
 void filegen(int a)
 {
 
@@ -151,13 +94,9 @@ void filegen(int a)
 
             for(int k=0; k<c; k++)
             {
-
                 out<<" "<<randomnumber(1, 10);;
-
             }
             out<<"\n";
-
-
         }
                 auto end = std::chrono::high_resolution_clock::now();
                 auto elapsed = (std::chrono::duration<double>( end - start ).count());
@@ -174,49 +113,37 @@ void irasyti(std::vector<mokinys> duom)
     std::cin>>duom[0].pavarde;
     cout<<"Pazymiai:(baigti rasykite -1)\n";
     int a;
-
-
+    std::vector<int> vtemp;
     std::string line;
-
     std::cin.ignore();
+    bool atleastone=false;
     while(1)
     {
-
         while(1)
         {
-
             std::getline(std::cin, line);
             std::stringstream ss(line);
-
-
-            if(ss >> a && ss.eof() && (a >= 1 && a <= 10)||a==-1)
+               if (atleastone)
             {
-
-
+                if(ss >> a && ss.eof() && (a >= 1 && a <= 10)||line=="-1")
                 break;
             }
 
-            cout<<"WRONG\n";
-
-
+            if(ss >> a && ss.eof() && (a >= 1 && a <= 10))
+            {
+                atleastone=true;
+                break;
+            }
+     cout<<"WRONG\n";
         }
-
-
-
-
-        if(a==-1)
+        if(line=="-1")
             break;
         else
-            duom[0].pazymiai.push_back(a);
-
-
+            vtemp.push_back(a);
     }
-
     cout<<"Iveskite egzamino rezultata"<<endl;
     while(1)
     {
-
-
         std::string line;
         std::getline(std::cin, line);
         std::stringstream s(line);
@@ -224,13 +151,36 @@ void irasyti(std::vector<mokinys> duom)
         {
             break;
         }
-
-
-
         cout<<"WRONG\n";
     }
-    duom[0].egzaminas=a;
+    int egzaminas=a;
+    duom[0].galmed=0.6*egzaminas+mediana(vtemp)*0.4;
+    duom[0].galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
     spausdinti(duom);
+
 }
 
+void sorting(std::deque<mokinys> & duom)
+{  std::sort(duom.begin(), duom.end(), [](const mokinys& a, const mokinys& rhs)
+            {
+                return a.pavarde < rhs.pavarde;
+            });
+
+}
+void sorting(std::list<mokinys> & listduom)
+{
+    listduom.sort([](const mokinys& a, const mokinys& rhs)
+            {
+                return a.pavarde < rhs.pavarde;
+            });
+
+}
+void sorting(std::vector<mokinys> & deqduom)
+{
+     std::sort(deqduom.begin(), deqduom.end(), [](const mokinys& a, const mokinys& rhs)
+            {
+                return a.pavarde < rhs.pavarde;
+            });
+
+}
 
