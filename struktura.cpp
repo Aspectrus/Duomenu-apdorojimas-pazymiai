@@ -1,4 +1,12 @@
 #include "struktura.h"
+#include <sstream>
+#include <chrono>
+#include <algorithm>
+#include <random>
+
+using std::cout;
+using std::cin;
+using std::endl;
 
 float mediana (std::vector<int> pazymiai)
 {
@@ -9,14 +17,15 @@ float mediana (std::vector<int> pazymiai)
     else
         return pazymiai[pazymiai.size()/2];
 }
-float vidurkis(std::vector<int> pazymiai)
-{
-    float sum=0;
+float vidurkis(std::vector<int> pazymiai){
+float sum=0;
     for( std::size_t i=0; i<pazymiai.size(); i++ )
     {
         sum+=pazymiai[i];
     }
     return sum/pazymiai.size();
+
+
 }
 
 unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -46,35 +55,7 @@ void checkfile(std::string a)
 }
 
 
-void read2(std::vector<mokinys> & temp, std::string name)
-{
 
-    std::ifstream in (name);
-    std::string eil;
-    int a=0;
-    while(std::getline(in, eil))
-    {
-        temp.push_back(mokinys());
-
-
-        std::istringstream ss(eil);
-        ss>>temp[a].vardas;
-        ss>>temp[a].pavarde;
-        int num;
-        std::vector<int> vtemp;
-        while(ss>>num)
-        vtemp.push_back(num);
-
-
-
-    int egzaminas=vtemp[vtemp.size()-1];
-    vtemp.pop_back();
-    temp[a].galmed=0.6*egzaminas+mediana(vtemp)*0.4;
-    temp[a].galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
-    a++;
-    }
-
-}
 
 void filegen(int a)
 {
@@ -104,24 +85,41 @@ void filegen(int a)
     }
 }
 
-void irasyti(std::vector<mokinys> duom)
+void irasyti(std::vector<mokinys>& duom)
 {
-    duom.push_back(mokinys());
+    mokinys temp;
     cout<<"Vardas:\n";
-    std::cin>>duom[0].vardas;
+    std::getline(std::cin, temp.vardas);
     cout<<"Pavarde:\n";
-    std::cin>>duom[0].pavarde;
+        std::getline(std::cin, temp.pavarde);
     cout<<"Pazymiai:(baigti rasykite -1)\n";
     int a;
     std::vector<int> vtemp;
     std::string line;
-    std::cin.ignore();
     bool atleastone=false;
     while(1)
     {
         while(1)
         {
             std::getline(std::cin, line);
+            cin.clear();
+
+            if(isnumber(line))
+            {
+                std::stringstream ss(line);
+                if(ss>>a&&(a >= 1 && a <= 10))
+                {
+                    atleastone=true;
+                    break;
+                }
+
+            }
+            else if(atleastone&&line=="-1")
+            {
+                break;
+            }
+            /*
+
             std::stringstream ss(line);
                if (atleastone)
             {
@@ -131,9 +129,11 @@ void irasyti(std::vector<mokinys> duom)
 
             if(ss >> a && ss.eof() && (a >= 1 && a <= 10))
             {
+
                 atleastone=true;
                 break;
             }
+            */
      cout<<"WRONG\n";
         }
         if(line=="-1")
@@ -154,10 +154,16 @@ void irasyti(std::vector<mokinys> duom)
         cout<<"WRONG\n";
     }
     int egzaminas=a;
-    duom[0].galmed=0.6*egzaminas+mediana(vtemp)*0.4;
-    duom[0].galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
-    spausdinti(duom);
+    temp.galmed=0.6*egzaminas+mediana(vtemp)*0.4;
+    temp.galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
+    duom.push_back(mokinys(temp));
 
+}
+bool isnumber(const std::string& s)
+{
+    std::string::const_iterator it = s.begin();
+    while (it != s.end() && std::isdigit(*it)) ++it;
+    return !s.empty() && it == s.end();
 }
 
 void sorting(std::deque<mokinys> & duom)

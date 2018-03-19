@@ -1,5 +1,13 @@
 #ifndef STRUKTURA_HPP
 #define STRUKTURA_HPP
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
+using std::cout;
+using std::cin;
+
 
 template<typename Container>
 void read(Container& varg, Container& kiet, std::string name)
@@ -25,13 +33,13 @@ void read(Container& varg, Container& kiet, std::string name)
         else
             varg.push_back(mokinys(temp));
     }
-sorting(varg);
-sorting(kiet);
+        in.close();
+
+//sorting(varg);
+//sorting(kiet);
 
 }
-
-
-template <typename T> void spausdinti( T duom)
+template <typename T> void spausdinti(const T duom)
 {
 
 cout<<std::left<<std::setw(15)<<"Pavarde"<<std::left<<std::setw(15) <<"Vardas"<<std::left<<std::setw(20) <<"Galutinis-Vidurkis"<<std::left<<std::setw(15) <<"Galutine-Mediana\n";
@@ -46,4 +54,101 @@ cout<<std::left<<std::setw(15)<<"Pavarde"<<std::left<<std::setw(15) <<"Vardas"<<
     }
 
 }
+
+template<typename Container>
+ void readblogas1(std::string name)
+{
+    Container z, a, b;
+
+
+
+    std::ifstream in (name);
+    std::string eil;
+    mokinys temp;
+    while(std::getline(in, eil))
+    {
+        std::istringstream ss(eil);
+        ss>>temp.vardas;
+        ss>>temp.pavarde;
+        int num;
+        while(ss>>num) temp.pazymiai.push_back(num);
+        int egzaminas=temp.pazymiai[temp.pazymiai.size()-1];
+        temp.pazymiai.pop_back();
+        temp.galmed=0.6*egzaminas+mediana(temp.pazymiai)*0.4;
+        temp.galvid=0.6*egzaminas+vidurkis(temp.pazymiai)*0.4;
+        z.push_back(mokinys(temp));
+        temp.pazymiai.clear();
+
+    }
+    in.close();
+
+
+    float galBalas;
+     int g=0;
+    for(auto i:z)
+   {
+
+
+        galBalas=vidurkis(i.pazymiai);
+        if(galBalas>=6) a.push_back(i);
+        else b.push_back(i);
+
+
+
+   }
+ cout<<z.size()<<" - ";
+   z.clear();
+   a.clear();
+   b.clear();
+
+
+}
+template<typename Container>
+ void readblogas2(std::string name)
+{
+    int g=0;
+    Container z, a, b;
+    std::ifstream in (name);
+    std::string eil;
+      mokinys temp;
+    while(std::getline(in, eil))
+    {
+        std::istringstream ss(eil);
+        ss>>temp.vardas;
+        ss>>temp.pavarde;
+        int num;
+        while(ss>>num)
+        temp.pazymiai.push_back(num);
+        temp.egzaminas=temp.pazymiai[temp.pazymiai.size()-1];
+        temp.pazymiai.pop_back();
+        z.push_back(mokinys(temp));
+                temp.pazymiai.clear();
+
+    }
+    in.close();
+    float galBalas;
+ /* for(auto i: z)
+   {
+        temp=i;
+        galBalas=vidurkis(i.pazymiai);
+        if(galBalas>=6){ a.push_back(i); z.erase(i);
+        cout<<a[g].vardas<<std::endl; g++;}
+
+   }*/
+       for(auto i=z.begin(); i!=z.end();i++)
+   {
+        galBalas=vidurkis((*i).pazymiai);
+        if(galBalas>=6){ a.push_back(mokinys(*i)); z.erase(i);     }
+   }
+
+
+   z.clear();
+   a.clear();
+   b.clear();
+
+
+ cout<<z.size()<<" - ";
+
+}
+
 #endif
