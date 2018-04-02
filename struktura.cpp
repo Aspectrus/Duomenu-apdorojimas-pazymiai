@@ -7,7 +7,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
-
+std::chrono::time_point<std::chrono::high_resolution_clock> start,end;
 float mediana (std::vector<int> pazymiai)
 {
     std::sort (pazymiai.begin(), pazymiai.end());
@@ -54,37 +54,6 @@ void checkfile(std::string a)
     in.close();
 }
 
-
-void read2(std::vector<mokinys> & temp, std::string name)
-{
-
-    std::ifstream in (name);
-    std::string eil;
-    int a=0;
-    while(std::getline(in, eil))
-    {
-        temp.push_back(mokinys());
-
-
-        std::istringstream ss(eil);
-        ss>>temp[a].vardas;
-        ss>>temp[a].pavarde;
-        int num;
-        std::vector<int> vtemp;
-        while(ss>>num)
-        vtemp.push_back(num);
-
-
-
-    int egzaminas=vtemp[vtemp.size()-1];
-    vtemp.pop_back();
-    temp[a].galmed=0.6*egzaminas+mediana(vtemp)*0.4;
-    temp[a].galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
-    a++;
-    }
-
-}
-
 void filegen(int a)
 {
 
@@ -113,13 +82,13 @@ void filegen(int a)
     }
 }
 
-void irasyti(std::vector<mokinys> duom)
+void irasyti(std::vector<mokinys>& duom)
 {
-    duom.push_back(mokinys());
+    mokinys temp;
     cout<<"Vardas:\n";
-    std::getline(std::cin, duom[0].vardas);
+    std::getline(std::cin, temp.vardas);
     cout<<"Pavarde:\n";
-        std::getline(std::cin, duom[0].pavarde);
+        std::getline(std::cin, temp.pavarde);
     cout<<"Pazymiai:(baigti rasykite -1)\n";
     int a;
     std::vector<int> vtemp;
@@ -182,9 +151,9 @@ void irasyti(std::vector<mokinys> duom)
         cout<<"WRONG\n";
     }
     int egzaminas=a;
-    duom[0].galmed=0.6*egzaminas+mediana(vtemp)*0.4;
-    duom[0].galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
-    spausdinti(duom);
+    temp.galmed=0.6*egzaminas+mediana(vtemp)*0.4;
+    temp.galvid=0.6*egzaminas+vidurkis(vtemp)*0.4;
+    duom.push_back(mokinys(temp));
 
 }
 bool isnumber(const std::string& s)
@@ -209,6 +178,7 @@ void sorting(std::list<mokinys> & listduom)
             });
 
 }
+
 void sorting(std::vector<mokinys> & deqduom)
 {
      std::sort(deqduom.begin(), deqduom.end(), [](const mokinys& a, const mokinys& rhs)
@@ -218,3 +188,13 @@ void sorting(std::vector<mokinys> & deqduom)
 
 }
 
+void s()
+{
+    start = std::chrono::high_resolution_clock::now();
+}
+void e()
+{
+     end = std::chrono::high_resolution_clock::now();
+                auto elapsed = (std::chrono::duration<double>( end - start ).count());
+                std::cout << elapsed<< "s \n";
+}
