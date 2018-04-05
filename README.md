@@ -20,3 +20,9 @@ Pasirinkimus pirmąją opcija galima rinktis iš trijų nuskaitymo būdų.
 | ------------- | ------------- | ------------- | 
 |![alt text](https://i.imgur.com/08dl7Hl.png)|![alt text](https://i.imgur.com/JRINxJD.png)|![alt text](https://i.imgur.com/jyoDn3y.png)| 
 
+# [v1.0](https://github.com/Aspectrus/Duomenu-apdorojimas-pazymiai/releases/tag/v1.0)
+# [v0.5](https://github.com/Aspectrus/Duomenu-apdorojimas-pazymiai/releases/tag/v0.5)
+# [v0.4](https://github.com/Aspectrus/Duomenu-apdorojimas-pazymiai/releases/tag/v0.4)
+# [v0.3](https://github.com/Aspectrus/Duomenu-apdorojimas-pazymiai/releases/tag/v0.3)
+# [v0.2](https://github.com/Aspectrus/Duomenu-apdorojimas-pazymiai/releases/tag/v0.2)
+# [v0.1](https://github.com/Aspectrus/Duomenu-apdorojimas-pazymiai/releases/tag/v0.1)
