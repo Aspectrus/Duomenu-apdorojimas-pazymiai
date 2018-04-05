@@ -1,5 +1,14 @@
 # Duomenu-apdorojimas-pazymiai
 
+# Vertinimas
+
+## Pastabos
+
+- Prideti cmake arba make faila(-us)
+
+Visa kita labai gerai: panaudota templeitai ir kodo struktura gera.
+
+
 
 ![alt text](https://i.imgur.com/NCXISro.png)
 
