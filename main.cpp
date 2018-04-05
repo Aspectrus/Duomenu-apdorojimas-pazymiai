@@ -38,15 +38,15 @@ cout<<"SUCCESS\n";    break;
            else if(pasirinkimas=="1")
             {
                 budas1<std::vector<mokinys>>("Vektorius");
-                budas1<std::vector<mokinys>>("Listas");
-                budas1<std::vector<mokinys>>("Dekas");
+                budas1<std::list<mokinys>>("Listas");
+                budas1<std::deque<mokinys>>("Dekas");
             cout<<"SUCCESS\n";    break;
             }
              else if(pasirinkimas=="2")
             {
                 budas2<std::vector<mokinys>>("Vektorius");
-                budas2<std::vector<mokinys>>("Listas");
-                budas2<std::vector<mokinys>>("Dekas");
+                budas2<std::list<mokinys>>("Listas");
+                budas2<std::deque<mokinys>>("Dekas");
 
             cout<<"SUCCESS\n";
             break;
